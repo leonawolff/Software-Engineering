@@ -1,62 +1,50 @@
-function Node(key){
+class Node {
+  constructor(key){
     this.key = key;
     const children = [];
+  }
 }
 
 //making the tree
 
-const root = Object.create(Node);
-root.key = 0;
+let root = new Node(0);
+//root.key = 0;
 
-root.children.push(new Node(9));
-root.children.push(new Node(2));
-root.children.push(new Node(23));
+root.children = [new Node(9), new Node(2), new Node(23)];
 
-const current = Object.create(Node);
-current = root.children.get(0);
+let current = root.children[0];
+current.children = [new Node(3), new Node(1)];
 
-current.children.push(new Node(3));
+current = current.children[0];
+current.children = [new Node(7)];
 
-current = current.children.get(0);
-current.children.push(new Node(3));
+current = current.children[0];
+current.children = [new Node(25), new Node(12), new Node(17)];
 
-current = current.children.get(0);
-current.children.push(new Node(7));
+current = root.children[0];
+current.children = [];
+current = current.children[1];
+console.log(current);
+current.children = [new Node(4), new Node(11)];
 
-current = current.children.get(0);
-current.children.push(new Node(25));
-current.children.push(new Node(12));
-current.children.push(new Node(17));
+current = current.children[1];
+current.children = [new Node(24), new Node(6)];
 
-current = root.children.get(0);
-current.children.push(new Node(1));
-current = current.get(1);
+current = root.children[1];
+current.children = new Node(18);
 
-current.children.push(new Node(4));
-current.children.push(new Node(11));
+current = current.children[0];
+current.children = [new Node(26), new Node(30)];
 
-current = current.children.get(1);
-current.children.push(new Node(24));
-current.children.push(new Node(6));
+current = root.children[2];
 
-current = root.children.get(1);
-current.children.push(new Node(18));
+current.children = [new Node(22), new Node(19)];
 
-current = current.children.get(0);
-current.children.push(new Node(26));
-current.children.push(new Node(30));
+current = current.children[1];
+current.children = [new Node(14), new Node(5)];
 
-current = root.children.get(2);
-
-current.children.push(new Node(22));
-current.children.push(new Node(19));
-
-current = current.children.get(1);
-current.children.push(new Node(14));
-current.children.push(new Node(5));
-
-current = current.children.get(0);
-current.children.push(new Node(8));
+current = current.children[0];
+current.children = [new Node(8)];
 
 var key1 = 6;
 var key2 = 3;
