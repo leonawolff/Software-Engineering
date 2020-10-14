@@ -27,8 +27,6 @@ current.children = [new Node(4), new Node(11)];
 current = current.children[1];
 current.children = [new Node(24), new Node(6)];
 
-// fine til here
-
 current = root.children[1];
 current.children = [new Node(18)];
 
@@ -45,17 +43,26 @@ current.children = [new Node(14), new Node(5)];
 current = current.children[0];
 current.children = [new Node(8)];
 
+
+// doin bits
+
 var key1 = 6;
 var key2 = 3;
-console.log(root.children);
-var lowestCommonAncestor = lca(root, key1, key2);
+// console.log("Root children post tree creation: ");
+// console.debug(root.children);
 
-if(lowestCommonAncestor === -1){
-  console.log("The lowest common ancestor of " + key1 + " and " + key2 + " could not be found.")
+if(searchTree(root, key1) && searchTree(root, key2)){
+
+  lcaTemp = root.key;
+  var lowestCommonAncestor = lca(root, key1, key2, lcaTemp);
+
+
+  console.log("The lowest common ancestor of " + key1 + " and " + key2 + " is " + lowestCommonAncestor + ".");
 }
 else{
-  console.log("The lowest common ancestor of " + key1 + " and " + key2 + " is " + lowestCommonAncestor + ".")
+    console.log("The lowest common ancestor of " + key1 + " and " + key2 + " could not be found.");
 }
+
 /* Tree should look like this:
 
                              (0)
@@ -73,38 +80,27 @@ else{
 
 // LCA section
 
-function lca(root, key1, key2){
+function lca(root, key1, key2, lcaTemp){
 
-  if(searchTree(root, key1) && searchTree(root, key2)){
-
-    console.log("key1 found = " + searchTree(root, key1) + "key2 found = " + searchTree(root, key2))
-
-    let path1 = [];
-    let path2 = [];
-
-    path1 = findPath(root, key1, path1);
-    path2 = findPath(root, key2, path2);
-
+  if(searchTree(key1) && searchTree(key2)){
+    lcaTemp = root.key;
     var i;
-    var j;
-
-    for(i = path1.length - 1; i > 0; i--){
-      for(j = path2.length - 1; i > 0; i--){
-        if(path1[i] === path2[j]){
-          return path1[i];
-        }
-      }
+    for(i = 0; i < root.children.length - 1; i++){
+      lca(root.children[i], key1, key2, lcaTemp);
     }
   }
-  return -1;
+  else{
+    return -1;
+  }
 }
 
-
-// check if a node with the given key exists in the Tree
+// check if a node with the given key exists in the tree
 function searchTree(root, key){
-
+  console.log("Root children on searchTree entry: ");
+  console.debug(root.children);
+  console.log("root key: " + root.key);
   let current = root;
-  console.log("current.children = " + current.children);
+
   if(current.children.length > 0){
     var i;
     for(i = 0; i < current.children.length - 1; i++){
@@ -117,27 +113,4 @@ function searchTree(root, key){
     }
   }
   return false;
-}
-
-/*
-1) Find path from root to n1 and store it in a vector or array.
-2) Find path from root to n2 and store it in another vector or array.
-3) Traverse both paths till the values in arrays are same. Return the common element just before the mismatch.
-*/
-
-function findPath(root, key, path){
-
-  var i;
-  let current = root;
-
-  for(i = 0; i < current.children.length - 1; i++){
-    if(current.children[i].key === key){
-      path.push(key);
-      return path;
-    }
-  }
-  for(i = 0; i < current.children.length - 1; i++){
-    path.push(current.children[i].key);
-    findPath(current.children[i], key, path);
-  }
 }
