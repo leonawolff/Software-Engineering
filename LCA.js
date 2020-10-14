@@ -51,7 +51,9 @@ var key2 = 3;
 // console.log("Root children post tree creation: ");
 // console.debug(root.children);
 
-if(searchTree(root, key1) && searchTree(root, key2)){
+if(searchTree(root, key1)){
+  //searchTree(root, key2)){
+  console.log(searchTree(root, key1));
 
   lcaTemp = root.key;
   var lowestCommonAncestor = lca(root, key1, key2, lcaTemp);
@@ -80,36 +82,42 @@ else{
 
 // LCA section
 
-function lca(root, key1, key2, lcaTemp){
+function lca(current, key1, key2, lcaTemp){
+
+  console.log("aaaaaaaaaaa " + current.key);
 
   if(searchTree(key1) && searchTree(key2)){
-    lcaTemp = root.key;
+    lcaTemp = current.key;
     var i;
-    for(i = 0; i < root.children.length - 1; i++){
-      lca(root.children[i], key1, key2, lcaTemp);
+    for(i = 0; i < current.children.length - 1; i++){
+      lca(current.children[i], key1, key2, lcaTemp);
     }
-  }
-  else{
-    return -1;
   }
 }
 
 // check if a node with the given key exists in the tree
 function searchTree(root, key){
-  console.log("Root children on searchTree entry: ");
-  console.debug(root.children);
-  console.log("root key: " + root.key);
+  // console.log("Root children on searchTree entry: ");
+  // console.debug(root.children);
+  // console.log("root key: " + root.key);
   let current = root;
+  console.log(root.key);
+//  let found = false;
 
   if(current.children.length > 0){
     var i;
     for(i = 0; i < current.children.length - 1; i++){
+      console.log("current children");
+      console.debug(current.children);
       if(current.children[i].key === key){
         return true;
       }
+
     }
     for(i = 0; i < current.children.length - 1; i++){
-      searchTree(current.children[i], key);
+      if(searchTree(current.children[i], key)){
+        return true;
+      }
     }
   }
   return false;
