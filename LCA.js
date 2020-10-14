@@ -8,7 +8,6 @@ class Node {
 //making the tree
 
 let root = new Node(0);
-//root.key = 0;
 
 root.children = [new Node(9), new Node(2), new Node(23)];
 
@@ -22,16 +21,16 @@ current = current.children[0];
 current.children = [new Node(25), new Node(12), new Node(17)];
 
 current = root.children[0];
-current.children = [];
 current = current.children[1];
-console.log(current);
 current.children = [new Node(4), new Node(11)];
 
 current = current.children[1];
 current.children = [new Node(24), new Node(6)];
 
+// fine til here
+
 current = root.children[1];
-current.children = new Node(18);
+current.children = [new Node(18)];
 
 current = current.children[0];
 current.children = [new Node(26), new Node(30)];
@@ -48,6 +47,7 @@ current.children = [new Node(8)];
 
 var key1 = 6;
 var key2 = 3;
+console.log(root.children);
 var lowestCommonAncestor = lca(root, key1, key2);
 
 if(lowestCommonAncestor === -1){
@@ -77,8 +77,10 @@ function lca(root, key1, key2){
 
   if(searchTree(root, key1) && searchTree(root, key2)){
 
-    const path1 = [];
-    const path2 = [];
+    console.log("key1 found = " + searchTree(root, key1) + "key2 found = " + searchTree(root, key2))
+
+    let path1 = [];
+    let path2 = [];
 
     path1 = findPath(root, key1, path1);
     path2 = findPath(root, key2, path2);
@@ -88,8 +90,8 @@ function lca(root, key1, key2){
 
     for(i = path1.length - 1; i > 0; i--){
       for(j = path2.length - 1; i > 0; i--){
-        if(path1.get(i) === path2.get(j)){
-          return path1.get(i);
+        if(path1[i] === path2[j]){
+          return path1[i];
         }
       }
     }
@@ -101,18 +103,17 @@ function lca(root, key1, key2){
 // check if a node with the given key exists in the Tree
 function searchTree(root, key){
 
-  const current = Object.create(Node);
-  current = root;
-
+  let current = root;
+  console.log("current.children = " + current.children);
   if(current.children.length > 0){
     var i;
-    for(i = 0; i < current.children.length; i++){
-      if(current.children.get(i).key === key){
+    for(i = 0; i < current.children.length - 1; i++){
+      if(current.children[i].key === key){
         return true;
       }
     }
-    for(i = 0; i < current.children.length; i++){
-      searchTree(current.children.get(i), key);
+    for(i = 0; i < current.children.length - 1; i++){
+      searchTree(current.children[i], key);
     }
   }
   return false;
@@ -127,17 +128,16 @@ function searchTree(root, key){
 function findPath(root, key, path){
 
   var i;
-  const current = Object.create(Node);
-  current = root;
+  let current = root;
 
-  for(i = 0; i < current.children.length; i++){
-    if(current.children.get(i).key === key){
+  for(i = 0; i < current.children.length - 1; i++){
+    if(current.children[i].key === key){
       path.push(key);
       return path;
     }
   }
-  for(i = 0; i < current.children.length; i++){
-    path.push(current.children.get(i).key);
-    findPath(current.children.get(i), key, path);
+  for(i = 0; i < current.children.length - 1; i++){
+    path.push(current.children[i].key);
+    findPath(current.children[i], key, path);
   }
 }
