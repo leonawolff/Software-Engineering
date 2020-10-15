@@ -44,18 +44,15 @@ current = current.children[0];
 current.children = [new Node(8)];
 
 
+
 // doin bits
 
 var key1 = 6;
 var key2 = 3;
-// console.log("Root children post tree creation: ");
-// console.debug(root.children);
 
-if(searchTree(root, key1)){
-  //searchTree(root, key2)){
-  console.log(searchTree(root, key1));
+if(searchTree(root, key1) && searchTree(root, key2)){
 
-  lcaTemp = root.key;
+  let lcaTemp = root.key;
   var lowestCommonAncestor = lca(root, key1, key2, lcaTemp);
 
 
@@ -65,6 +62,24 @@ else{
     console.log("The lowest common ancestor of " + key1 + " and " + key2 + " could not be found.");
 }
 
+
+
+// LCA section
+
+function lca(current, key1, key2, lcaTemp){
+
+//  console.log("aaaaaaaaaaa " + current.key);
+
+  if(searchTree(key1) && searchTree(key2)){
+    lcaTemp = current.key;
+    var i;
+    for(i = 0; i < current.children.length - 1; i++){
+      lca(current.children[i], key1, key2, lcaTemp);
+    }
+  }
+}
+
+// check if a node with the given key exists in the tree
 /* Tree should look like this:
 
                              (0)
@@ -79,46 +94,53 @@ else{
 
 
 */
-
-// LCA section
-
-function lca(current, key1, key2, lcaTemp){
-
-  console.log("aaaaaaaaaaa " + current.key);
-
-  if(searchTree(key1) && searchTree(key2)){
-    lcaTemp = current.key;
-    var i;
-    for(i = 0; i < current.children.length - 1; i++){
-      lca(current.children[i], key1, key2, lcaTemp);
-    }
-  }
-}
-
-// check if a node with the given key exists in the tree
 function searchTree(root, key){
-  // console.log("Root children on searchTree entry: ");
-  // console.debug(root.children);
-  // console.log("root key: " + root.key);
-  let current = root;
-  console.log(root.key);
-//  let found = false;
 
-  if(current.children.length > 0){
-    var i;
-    for(i = 0; i < current.children.length - 1; i++){
-      console.log("current children");
-      console.debug(current.children);
-      if(current.children[i].key === key){
+//  console.log(root.key);
+//  console.debug(root.children)
+  let found = false;
+  var i;
+  if(root.children && root.children.length > 0){
+
+    for(i = 0; i < root.children.length; i++){
+      if(root.children[i].key === key){
         return true;
       }
-
     }
-    for(i = 0; i < current.children.length - 1; i++){
-      if(searchTree(current.children[i], key)){
+    for(i = 0; i < root.children.length; i++){
+      found = searchTree(root.children[i], key);
+      if(found){
         return true;
       }
     }
   }
   return false;
 }
+
+// function searchTree(root, key){
+//   // console.log("Root children on searchTree entry: ");
+//   // console.debug(root.children);
+//   // console.log("root key: " + root.key);
+//   let current = root;
+//   console.log(root.key);
+//   let found = false;
+//
+//   if(current.children.length > 0){
+//     var i;
+//     for(i = 0; i < current.children.length - 1; i++){
+//       console.log("current children");
+//       console.debug(current.children);
+//       if(current.children[i].key === key){
+//         return true;
+//       }
+//
+//     }
+//     for(i = 0; i < current.children.length - 1; i++){
+//       found = searchTree(current.children[i], key);
+//       if(found === true){
+//         return found;
+//       }
+//       }
+//     }
+//   return false;
+// }
