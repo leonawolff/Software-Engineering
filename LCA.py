@@ -51,16 +51,17 @@ key2 = 5;
 for item in root.children:
     print(item.key)
 """
-def searchTree(root, key):
-    found=False
-    print(root.key)
+def searchTree(root, key, found):
+
+#    print(root.key)
     if(root.children is not None) and (len(root.children) > 0):
-        if key in root.children:
-            found=True
-            print(found)
-        else:
-            for i in root.children:
-                found = searchTree(i, key)
+        for i in root.children:
+            if i.key == key:
+                found=True
+#                print(found)
+            else:
+                for i in root.children:
+                    found = searchTree(i, key, found)
     return found
 
-print(searchTree(root, 14))
+print(searchTree(root, 31, False))
