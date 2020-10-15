@@ -39,29 +39,32 @@ current.children = [Node(14), Node(5)]
 current = current.children[0]
 current.children = [Node(8)]
 
-
-
-
-"""
-LCA stuff
-"""
 key1 = 14;
 key2 = 5;
-"""
-for item in root.children:
-    print(item.key)
-"""
+
 def searchTree(root, key, found):
 
-#    print(root.key)
     if(root.children is not None) and (len(root.children) > 0):
         for i in root.children:
             if i.key == key:
                 found=True
-#                print(found)
             else:
                 for i in root.children:
                     found = searchTree(i, key, found)
     return found
 
 print(searchTree(root, 31, False))
+
+def lca(current, key1, key2, lcaTemp):
+
+    if searchTree(current, key1, False) and searchTree(current, key2, False):
+        lcaTemp = current.key
+        for i in current.children:
+            lcaTemp = lca(i, key1, key2, lcaTemp)
+    return lcaTemp
+
+if searchTree(root, key1, False) and searchTree(root, key2, False):
+    lowestCommonAncestor = lca(root, key1, key2, root.key)
+    print("The lowest common ancestor of ",key1," and ",key2," is ",lowestCommonAncestor,".")
+else:
+    print("The lowest common ancestor of ",key1," and ",key2," could not be found.")
