@@ -78,8 +78,6 @@ else{
 
 function lca(current, key1, key2, lcaTemp){
 
-  console.log("aaaaaaaaaaa " + current.key);
-
   if(searchTree(current, key1) && searchTree(current, key2)){
 
     lcaTemp = current.key;
