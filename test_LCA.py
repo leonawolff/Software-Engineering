@@ -63,6 +63,16 @@ class LCATest(unittest.TestCase):
         self.assertEqual(7, lca(root, 2, 6), msg="Test 2")
         self.assertEqual(None, lca(root, 2, 11), msg="Test 3")
 
+    def test_tinyTree(self):
+
+        root = Node(0)
+        root.children = [Node(1), Node(3)]
+
+
+        self.assertEqual(0, lca(root, 1, 3), msg="Test 1")
+        self.assertEqual(None, lca(root, 0, 1), msg="Test 2")
+
+
 
 
 if __name__ == '__main__':
