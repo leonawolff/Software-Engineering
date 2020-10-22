@@ -55,14 +55,26 @@ test('Find LCA of 14 and 5', () => {
   expect(lcaFile.lca(root, 14, 5)).toBe(19);
 });
 
-test('Find LCA of 14 and 5', () => {
+test('Find LCA of 25 and 8', () => {
   expect(lcaFile.lca(root, 25, 8)).toBe(0);
 });
 
-test('Find LCA of 14 and 5', () => {
+test('Find LCA of 30 and 31 (31 not in tree)', () => {
   expect(lcaFile.lca(root, 30, 31)).toBe(null);
 });
 
-test('Find LCA of 14 and 5', () => {
+test('Find LCA of 26 and 30', () => {
   expect(lcaFile.lca(root, 26, 30)).toBe(18);
+});
+
+const root2 = lcaFile.createNode(1);
+
+root2.children = [lcaFile.createNode(2), lcaFile.createNode(3)];
+
+test('Find LCA of 2 and 3 in small tree', () => {
+  expect(lcaFile.lca(root2, 2, 3)).toBe(1);
+});
+
+test('Find LCA of 3 and 4 in small tree (4 not in tree)', () => {
+  expect(lcaFile.lca(root2, 3, 4)).toBe(null);
 });
