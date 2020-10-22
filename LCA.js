@@ -1,8 +1,12 @@
-class Node {
+ class Node {
   constructor(key){
     this.key = key;
     const children = [];
   }
+}
+
+function createNode(key){
+  return(new Node(key));
 }
 
 function lca(root, key1, key2){
@@ -63,5 +67,5 @@ function searchTree(root, key){
   return false;
 }
 
-module.exports = Node(key);
-module.exports = lca(root, key1, key2);
+module.exports. createNode = createNode;
+module.exports.lca = lca;
