@@ -4,74 +4,92 @@ from LCA import *
 
 class LCATest(unittest.TestCase):
 
-    def test_bigTree(self):
+    def test_dag1(self):
 
-        root = Node(0)
-        root.children = [Node(9), Node(2), Node(23)]
+        d = makeDag()  
 
-        current = root.children[0]
-        current.children = [Node(3), Node(1)]
+        n0 = Node(0)
+        n1 = Node(1)
+        n2 = Node(2)
+        n3 = Node(3)
+        n4 = Node(4)
+        n5 = Node(5)
+        n6 = Node(6)
+        n7 = Node(7)
 
-        current = current.children[0]
-        current.children = [Node(7)]
+        n0.children = [n1, n2]
+        n1.children = [n3, n7]
+        n2.children = [n4, n5]
+        n3.children = [n6]
+        n6.children = [n7]
 
-        current = current.children[0]
-        current.children = [Node(25), Node(12), Node(17)]
+        d.add(d, n0)
+        d.add(d, n1)
+        d.add(d, n2)
+        d.add(d, n3)
+        d.add(d, n4)
+        d.add(d, n5)
+        d.add(d, n6)
+        d.add(d, n7)
 
-        current = root.children[0]
-        current = current.children[1]
+        self.assertEqual(0, lca(d, 1, 2), msg="Test 1")
+        self.assertEqual(6, lca(d, 6, 7), msg="Test 2")
+        self.assertEqual(2, lca(d, 4, 5), msg="Test 3")
+        self.assertEqual(None, lca(d, 10, 2), msg="Test 4")
 
-        current.children = [Node(4), Node(11)]
+    def test_dag2(self):
+        
+        d = makeDag()  
+        d.nodes.clear()
+        
+        n0 = Node(0)
+        n1 = Node(1)
+        n2 = Node(2)
+        n3 = Node(3)
 
-        current = current.children[1]
-        current.children = [Node(24), Node(6)]
+        n0.children = [n1, n2]
 
-        current = root.children[1]
-        current.children = [Node(18)]
+        d.add(d, n0)
+        d.add(d, n1)
+        d.add(d, n2)
+        d.add(d, n3)
 
-        current = current.children[0]
-        current.children = [Node(26), Node(30)]
+        self.assertEqual(0, lca(d, 1, 2), msg="Test 1")
+        self.assertEqual(None, lca(d, 2, 3), msg="Test 2")
+        self.assertEqual(None, lca(d, 5, 6), msg="Test 3")
 
-        current = root.children[2]
+    def test_dag3(self):
 
-        current.children = [Node(22), Node(19)]
+        d = makeDag()  
+        d.nodes.clear()
+        
+        n0 = Node(0)
+        n1 = Node(1)
+        n2 = Node(2)
+        n3 = Node(3)
+        n4 = Node(4)
+        n5 = Node(5)
+        n6 = Node(6)
 
-        current = current.children[1]
-        current.children = [Node(14), Node(5)]
+        n0.children = [n1, n3]
+        n1.children = [n2]
+        n5.children = [n3]
+        n6.children = [n4, n5]
 
-        current = current.children[0]
-        current.children = [Node(8)]
-
-        self.assertEqual(19, lca(root, 14, 5), msg="Test 1")
-        self.assertEqual(9, lca(root, 25, 1), msg="Test 2")
-        self.assertEqual(0, lca(root, 18, 23), msg="Test 3")
-        self.assertEqual(9, lca(root, 7, 1), msg="Test 4")
-        self.assertEqual(0, lca(root, 9, 23), msg="Test 5")
-        self.assertEqual(0, lca(root, 5, 25), msg="Test 6")
-        self.assertEqual(None, lca(root, 30, 31), msg="Test 6")
-
-    def test_smallTree(self):
-
-        root = Node(7)
-        root.children = [Node(2), Node(8), Node(5)]
-        current = root.children[1]
-        current.children = [Node(4), Node(1)]
-        current = root.children[2]
-        current.children = [Node(6)]
-
-        self.assertEqual(8, lca(root, 4, 1), msg="Test 1")
-        self.assertEqual(7, lca(root, 2, 6), msg="Test 2")
-        self.assertEqual(None, lca(root, 2, 11), msg="Test 3")
-
-    def test_tinyTree(self):
-
-        root = Node(0)
-        root.children = [Node(1), Node(3)]
+        d.add(d, n0)
+        d.add(d, n1)
+        d.add(d, n2)
+        d.add(d, n3)
+        d.add(d, n4)
+        d.add(d, n5)
+        d.add(d, n6)
 
 
-        self.assertEqual(0, lca(root, 1, 3), msg="Test 1")
-        self.assertEqual(None, lca(root, 0, 1), msg="Test 2")
-
+        self.assertEqual(6, lca(d, 3, 4), msg="Test 1")
+        self.assertEqual(None, lca(d, 2, 6), msg="Test 2")
+        self.assertEqual(0, lca(d, 2, 3), msg="Test 3")
+        self.assertEqual(None, lca(d, 5, 2), msg="Test 4")
+        self.assertEqual(None, lca(d, 7, 2), msg="Test 5")
 
 
 
