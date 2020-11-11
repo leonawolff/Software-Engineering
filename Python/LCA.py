@@ -1,30 +1,49 @@
 class Node:
-    children = []
     def __init__(self, key):
         self.key = key
+        self.children = []
 
-def lca(root, key1, key2):
-    if searchTree(root, key1, False) and searchTree(root, key2, False):
-        lowestCommonAncestor = findLCA(root, key1, key2, root.key)
+class DAG:
+    nodes = []
+    def __init__(self):
+        self.length = 0
+
+    def add(self, node):
+        self.nodes.append(node)
+
+def makeDag():
+    d = DAG
+    return d
+
+def nodeExists(d, k):
+    for i in d.nodes: 
+        if(i.key == k):
+            return True
+    return False
+
+def lca(d, key1, key2):
+    if nodeExists(d, key1) and nodeExists(d, key2):
+        for i in d.nodes:
+            lowestCommonAncestor = findLCA(i, key1, key2, None)
+            if lowestCommonAncestor is not None:
+                return lowestCommonAncestor
     else:
-        lowestCommonAncestor = None
-    return lowestCommonAncestor
+        return None
 
 
-def findLCA(current, key1, key2, lcaTemp):
-    if searchTree(current, key1, False) and searchTree(current, key2, False):
+def findLCA(current, key1, key2, lcaTemp): 
+    if search(current, key1) and search(current, key2):
         lcaTemp = current.key
         for i in current.children:
             lcaTemp = findLCA(i, key1, key2, lcaTemp)
     return lcaTemp
 
 
-def searchTree(root, key, found):
+def search(root, key):
+    if root.key == key:
+        return True
     if(root.children is not None) and (len(root.children) > 0):
         for i in root.children:
-            if i.key == key:
-                found=True
-            else:
-                for i in root.children:
-                    found = searchTree(i, key, found)
-    return found
+            if search(i, key):
+                return True
+    return False
